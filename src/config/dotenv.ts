@@ -23,3 +23,5 @@ export const MYSQL = {
   PORT: parseInt(getValue('MYSQL_PORT'), 10),
   SYNC: false,
 };
+
+export const API_KEY = getValue('API_KEY');

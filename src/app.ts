@@ -21,13 +21,10 @@ const serverStart = async (): Promise<void> => {
 
   await ORMLoad();
 
-  // const schedule = scheduleJob('0 3,18 * * *', async () => {
-  //   updateData
-  // })
+  const schedule = scheduleJob('0 3,15 * * *', async () => {
 
-  const users = await updateData();
-
-  console.log(users)
+    await updateData();
+  })
 
   app.listen(PORT, () => {
     console.log(`server is running at ${PORT}`);
