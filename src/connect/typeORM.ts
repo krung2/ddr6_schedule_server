@@ -1,10 +1,13 @@
+import { Connection } from 'typeorm';
 import { getConnection } from './connection';
 
-const ORMLoad = async () => {
+const ORMLoad = async (): Promise<Connection> => {
 
-  await getConnection();
+  const connection: Connection = await getConnection();
 
   console.log('[DB] Sync');
+
+  return connection;
 };
 
 export default ORMLoad;
