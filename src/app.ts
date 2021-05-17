@@ -1,4 +1,5 @@
 import express from 'express';
+import ORMLoad from './connect/typeORM';
 
 class App {
 
@@ -13,8 +14,13 @@ class App {
 const app: express.Application = new App().application;
 const PORT: number = 8080;
 
+const serverStart = async (): Promise<void> => {
 
+  await ORMLoad();
 
-app.listen(PORT, () => {
-  console.log(`server is running at ${PORT}`);
-})
+  app.listen(PORT, () => {
+    console.log(`server is running at ${PORT}`);
+  })
+}
+
+serverStart();
