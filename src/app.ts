@@ -1,7 +1,9 @@
 import express from 'express';
 import { scheduleJob } from 'node-schedule';
 import { Connection } from 'typeorm';
+import { PORT } from './config/dotenv';
 import ORMLoad from './connect/typeORM';
+import { updateData } from './update/update';
 
 class App {
 
@@ -14,16 +16,18 @@ class App {
 }
 
 const app: express.Application = new App().application;
-const PORT: number = 8080;
 
 const serverStart = async (): Promise<void> => {
 
-  const connection: Connection = await ORMLoad();
+  await ORMLoad();
 
-  const schedule = scheduleJob('0 3,18 * * *', async () => {
-    console.log(1);
-    console.log(new Date());
-  })
+  // const schedule = scheduleJob('0 3,18 * * *', async () => {
+  //   updateData
+  // })
+
+  const users = await updateData();
+
+  console.log(users)
 
   app.listen(PORT, () => {
     console.log(`server is running at ${PORT}`);
