@@ -16,4 +16,4 @@ RUN yarn
 
 COPY . .
 
-RUN echo "yarn start"
+CMD [ "yarn start" ]
