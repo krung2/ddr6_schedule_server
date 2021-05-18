@@ -3,9 +3,16 @@ import { getConnection } from './connection';
 
 const ORMLoad = async () => {
 
-  await getConnection();
+  try {
 
-  console.log('[DB] Sync');
+    await getConnection();
+    console.log('[DB] Sync');
+  } catch (err) {
+
+    console.log(err);
+    throw new Error(`[DB] Connect Error`);
+  }
+
 };
 
 export default ORMLoad;
