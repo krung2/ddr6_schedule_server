@@ -21,7 +21,7 @@ const serverStart = async (): Promise<void> => {
 
   await ORMLoad();
 
-  const schedule = scheduleJob('0 3,15 * * *', async () => {
+  const schedule = scheduleJob('23 3,11 * * *', async () => {
 
     await updateData();
   })
