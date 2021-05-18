@@ -66,7 +66,11 @@ export const updateData = async (): Promise<any> => {
 
   const userRepository = getRepository(User);
 
-  const users: User[] = await userRepository.find();
+  const users: User[] = await userRepository.find({
+    order: {
+      createdAt: 'ASC',
+    },
+  });
 
   for (const data of users) {
 
