@@ -1,6 +1,5 @@
 import express from 'express';
 import { scheduleJob } from 'node-schedule';
-import { Connection } from 'typeorm';
 import { PORT } from './config/dotenv';
 import ORMLoad from './connect/typeORM';
 import { updateData } from './update/update';
@@ -21,7 +20,7 @@ const serverStart = async (): Promise<void> => {
 
   await ORMLoad();
 
-  const schedule = scheduleJob('0,30 * * * *', async () => {
+  const schedule = scheduleJob('0 * * * *', async () => {
 
     await updateData();
   })

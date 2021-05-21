@@ -4,6 +4,7 @@ import { IGeneric } from "../interface/IGeneric";
 import { ISeasonal } from "../interface/ISeasonal";
 import { getRepository, Repository } from "typeorm";
 import User from "../models/user.entity";
+import { sendWebHook } from "src/libs/sendWebHook.lib";
 
 const delay = () => {
   return new Promise(result => setTimeout(result, 10000));
@@ -53,16 +54,40 @@ const response = async (data: User, userRepository: Repository<User>) => {
 
     await userRepository.save(createUser);
 
-    console.log(`${name}의 계정 ${userName} 갱신 완료 uplayId=${uplayId}`)
+    const successMessage = `${name}의 계정 ${userName} 갱신 완료 uplayId=${uplayId}`;
+    await sendWebHook(successMessage)
+    console.log(successMessage);
 
   } catch (err) {
 
-    console.log(`${name}의 계정 ${userName} 갱신 중 오류 발생 uplayId=${uplayId}`);
+    if (err === 'webHook Error') {
+
+      console.log('웹훅 에러');
+      return;
+    }
+
+    const errorMessage = `${name}의 계정 ${userName} 갱신 중 오류 발생 uplayId=${uplayId}`;
+
+    try {
+
+      await sendWebHook(errorMessage);
+    } catch (err) {
+
+      console.log('웹훅 에러');
+    }
+    console.log(errorMessage);
   }
 
 }
 
-export const updateData = async (): Promise<any> => {
+export const updateData = async (): Promise<void> => {
+
+  const startDate = new Date();
+  startDate.setHours(startDate.getHours() + 9);
+  const start = startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString() + '시 스케줄 시작';
+
+  await sendWebHook(start);
+  console.log(start);
 
   const userRepository = getRepository(User);
 
@@ -79,5 +104,10 @@ export const updateData = async (): Promise<any> => {
     await delay();
   }
 
-  return users;
+  const endTime = new Date();
+  endTime.setHours(endTime.getHours() + 9);
+  const end = endTime.toLocaleDateString() + ' ' + endTime.toLocaleTimeString() + '에 작업을 완료하였습니다';
+
+  await sendWebHook(end);
+  console.log(sendWebHook);
 }
