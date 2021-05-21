@@ -4,7 +4,7 @@ import { IGeneric } from "../interface/IGeneric";
 import { ISeasonal } from "../interface/ISeasonal";
 import { getRepository, Repository } from "typeorm";
 import User from "../models/user.entity";
-import { sendWebHook } from "src/libs/sendWebHook.lib";
+import { sendWebHook } from "../libs/sendWebHook.lib";
 
 const delay = () => {
   return new Promise(result => setTimeout(result, 10000));
