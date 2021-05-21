@@ -70,7 +70,7 @@ const response = async (data: User, userRepository: Repository<User>) => {
 
     try {
 
-      await sendWebHook('\@everyone ' + errorMessage);
+      await sendWebHook('\@admin ' + errorMessage);
     } catch (err) {
 
       console.log('웹훅 에러');
