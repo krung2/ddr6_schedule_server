@@ -4,7 +4,7 @@ import { IGeneric } from "../interface/IGeneric";
 import { ISeasonal } from "../interface/ISeasonal";
 import { getRepository, Repository } from "typeorm";
 import User from "../models/user.entity";
-import { sendWebHook } from "../libs/sendWebHook.lib";
+import { sendErrorWebHook, sendWebHook } from "../libs/sendWebHook.lib";
 
 const delay = () => {
   return new Promise(result => setTimeout(result, 10000));
@@ -70,7 +70,7 @@ const response = async (data: User, userRepository: Repository<User>) => {
 
     try {
 
-      await sendWebHook('\@admin ' + errorMessage);
+      await sendErrorWebHook('\@admin ' + errorMessage);
     } catch (err) {
 
       console.log('웹훅 에러');
