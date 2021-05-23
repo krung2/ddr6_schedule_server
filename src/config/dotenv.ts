@@ -26,4 +26,7 @@ export const MYSQL = {
 
 export const API_KEY = getValue('API_KEY');
 
-export const WEB_HOOK = getValue('WEB_HOOK');
+export const WEB_HOOK = {
+  SEND: getValue('WEB_HOOK'),
+  ERROR: getValue('ERROR_WEB_HOOK'),
+};
